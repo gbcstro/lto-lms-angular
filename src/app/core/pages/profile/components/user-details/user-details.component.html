@@ -1,24 +1,39 @@
 <div class="card rounded-4" *ngIf="user$ | async as user">
-    <div class="card-body p-4">
-        <div class="d-flex align-items-center justify-content-between">
-            <div class="d-flex gap-4 align-items-center">
-                <img [src]="user.profile_picture ?? 'https://static.vecteezy.com/system/resources/previews/009/292/244/non_2x/default-avatar-icon-of-social-media-user-vector.jpg'" height="75" width="75" alt="profile_picture">
-                <div class="d-flex flex-column">
-                    <span class="fs-3 fw-semibold">{{ user.first_name }} {{ user.last_name }}</span>
-                    <span class="fs-5 fw-medium">{{ user.address ?? 'No Address' }}</span>
-                </div>
-                <div class="d-flex flex-row gap-2 flex-wrap">
-                    <img 
-                        *ngFor="let badge of badges$ | async"
-                        [src]="badge.image" 
-                        height="65" 
-                        width="65" 
-                        [alt]="badge.name"
-                        [title]="badge.name"
-                    >
-                </div>
+    <div class="card-body p-4 d-flex align-items-center justify-content-between">
+        <div class="d-flex gap-4 align-items-center">
+            <img [src]="user.profile_picture ?? 'https://static.vecteezy.com/system/resources/previews/009/292/244/non_2x/default-avatar-icon-of-social-media-user-vector.jpg'" height="75" width="75" alt="profile_picture">
+            <div class="d-flex flex-column">
+                <span class="fs-3 fw-semibold">{{ user.first_name }} {{ user.last_name }}</span>
+                <span class="fs-5 fw-medium">{{ user.address ?? 'No Address' }}</span>
             </div>
-            <button class="btn btn-primary" (click)="view(content)">
+            <div class="d-flex flex-row gap-2 flex-wrap">
+                <img 
+                    *ngFor="let badge of badges$ | async"
+                    [src]="badge.image" 
+                    height="65" 
+                    width="65" 
+                    [alt]="badge.name"
+                    [title]="badge.name"
+                    role="button"
+                    (click)="openBadgeModal(badge, badgeModal)"
+                >
+            </div>
+            
+            <!-- Modal for Badge Viewing -->
+            <ng-template #badgeModal let-modal>
+                <div class="modal-header">
+                    <h4 class="modal-title">{{ selectedBadge?.name }}</h4>
+                    <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Close click')"></button>
+                </div>
+                <div class="modal-body d-flex justify-content-center">
+                    <img [src]="selectedBadge?.image" height="250" width="250" [alt]="selectedBadge?.name">
+                </div>
+            </ng-template>
+        </div>
+
+        <!-- Move Edit Profile Button to the Right -->
+        <div class="ms-auto">
+            <button class="btn" style="background-color: #8E1615; color: white;" (click)="view(content)"> 
                 Edit Profile
             </button>
         </div>

@@ -6,7 +6,7 @@ import { NgbAlert } from '@ng-bootstrap/ng-bootstrap';
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
-  styleUrl: './login.component.scss'
+  styleUrls: ['./login.component.scss']
 })
 export class LoginComponent {
   userForm: FormGroup = new FormGroup({
@@ -17,17 +17,22 @@ export class LoginComponent {
   invalidLogin: boolean = false;
   errorMessage: string = 'Username or password is incorrect';
 
-  constructor(
-    private _authService: AuthService
-  ) { }
+  constructor(private _authService: AuthService) {}
 
   login() {
     this._authService.login(this.userForm.value.username!, this.userForm.value.password!).subscribe(
-      () => {},
-      error => {
+      () => {
+        this.invalidLogin = false;
+      },
+      (error) => {
         this.invalidLogin = true;
+        this.errorMessage = error.error.message || 'Username or password is incorrect';
       }
     );
   }
 
+  handleGoogleResponse(event: any) {
+    this.invalidLogin = true;
+    this.errorMessage = event;
+  }
 }

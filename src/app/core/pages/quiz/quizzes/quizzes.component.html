@@ -1,90 +1,128 @@
-<h1 class="fw-bold font-monospace px-5">Quiz</h1>
 <div class="row g-5 px-5" *ngIf="quiz$ | async as quiz">
     <div class="col-5 d-flex flex-column gap-5">
-        <div class="card rounded-4" style="width: 400px;">
+        <div class="card rounded-4 frosted-glass" style="width: 400px;">
             <div class="card-body p-5">
                 <span class="fs-3 text-success fw-bold">{{ quiz.title }}</span>
-                <p>
-                    {{ quiz.description }}
-                </p>
+                <p>{{ quiz.description }}</p>
             </div>
         </div>
-        <div class="card rounded-4" style="width: 400px; height: 375px;">
+        <div class="card rounded-4 frosted-glass" style="width: 400px; height: 375px;">
             <div class="card-body p-5">
-                <h4 class="card-title">Questions: </h4>
+                <h4 class="card-title">Questions:</h4>
                 <div class="d-flex flex-row flex-wrap gap-3 my-3">
-                        <button 
-                            *ngFor="let question of quiz.questions; let i = index"
-                            (click)="select(i)"
-                            class="border border-2 border-dark" 
-                            style="width: 35px; height: 35px;"
-                            [ngStyle]="{'background-color': questionIndex === i ? 'white' : '#FFFAE7'}"
-                        >
-                            {{ i+1 }}
-                        </button>
+                    <button
+                        *ngFor="let question of quiz.questions; let i = index"
+                        (click)="select(i)"
+                        class="border border-2 border-dark rounded-circle"
+                        style="width: 35px; height: 35px; background-color: #8E1615; color: white;"
+                        [ngStyle]="{
+                            'background-color': questionIndex === i ? 'white' : '#8E1615',
+                            'color': questionIndex === i ? '#8E1615' : 'white'
+                        }"
+                    >
+                        {{ i + 1 }}
+                    </button>
                 </div>
-                <hr class="my-4">
+                <hr class="my-4" />
                 <div class="d-flex align-items-center justify-content-around">
                     <div class="d-flex flex-column">
                         <span class="fs-3 fw-bold font-monospace">{{ id !== 3 ? 'Time Elapsed' : 'Timer' }}:</span>
                         <span class="fs-5 fw-semibold">{{ (id !== 3 ? elapsedMinutes : remainingMinutes) | async }} minutes</span>
                     </div>
-                    <img src="./assets/clock.png" width="65" height="65" class="img-fluid" alt="clock">
+                    <img src="./assets/clock.png" width="65" height="65" class="img-fluid" alt="clock" />
                 </div>
             </div>
         </div>
     </div>
     <div class="col-7">
-        <div class="card rounded-4 w-100">
+        <div class="card rounded-4 frosted-glass w-100">
             <div class="card-body user-select-none p-5">
                 <div class="d-flex flex-row justify-content-around align-items-center my-3 fw-semibold">
-                    <span (click)="prev()" role="button" class="d-flex align-items-center gap-2 fs-5" [ngClass]="{ 'text-muted' : questionIndex === 0 }">
+                    <span (click)="prev()" role="button" class="d-flex align-items-center gap-2 fs-5" [ngClass]="{ 'text-muted': questionIndex === 0 }">
                         <svg width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M0.313911 7.96334C-0.104638 7.49966 -0.104638 6.74663 0.313911 6.28295L5.67136 0.347765C6.0899 -0.115921 6.76963 -0.115921 7.18818 0.347765C7.60673 0.811451 7.60673 1.56448 7.18818 2.02816L3.65562 5.93796L13.9285 5.93796C14.5212 5.93796 15 6.46842 15 7.125C15 7.78158 14.5212 8.31204 13.9285 8.31204L3.65897 8.31204L7.18483 12.2218C7.60338 12.6855 7.60338 13.4385 7.18483 13.9022C6.76628 14.3659 6.08656 14.3659 5.66801 13.9022L0.310563 7.96705L0.313911 7.96334Z" 
-                            fill="#40403F"/>
+                            <path d="M0.313911 7.96334C-0.104638 7.49966 -0.104638 6.74663 0.313911 6.28295L5.67136 0.347765C6.0899 -0.115921 6.76963 -0.115921 7.18818 0.347765C7.60673 0.811451 7.60673 1.56448 7.18818 2.02816L3.65562 5.93796L13.9285 5.93796C14.5212 5.93796 15 6.46842 15 7.125C15 7.78158 14.5212 8.31204 13.9285 8.31204L3.65897 8.31204L7.18483 12.2218C7.60338 12.6855 7.60338 13.4385 7.18483 13.9022C6.76628 14.3659 6.08656 14.3659 5.66801 13.9022L0.310563 7.96705L0.313911 7.96334Z" fill="#40403F" />
                         </svg>
                         Previous
                     </span>
-                    <h2 class="card-title fw-bold">Question {{ questionIndex+1 }}</h2>
-                    <span *ngIf="(questionIndex+1) !== questionLength" (click)="next()" role="button" class="d-flex align-items-center gap-2 fs-5">
+                    <h2 class="card-title fw-bold">Question {{ questionIndex + 1 }}</h2>
+                    <span *ngIf="questionIndex + 1 < questionLength" (click)="next()" role="button" class="d-flex align-items-center gap-2 fs-5">
                         Next
                         <svg width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M14.6861 6.28666C15.1046 6.75034 15.1046 7.50337 14.6861 7.96705L9.32864 13.9022C8.9101 14.3659 8.23037 14.3659 7.81182 13.9022C7.39327 13.4385 7.39327 12.6855 7.81182 12.2218L11.3444 8.31204L1.07149 8.31204C0.478821 8.31204 0 7.78158 0 7.125C0 6.46842 0.478821 5.93796 1.07149 5.93796L11.341 5.93796L7.81517 2.02816C7.39662 1.56448 7.39662 0.81145 7.81517 0.347764C8.23372 -0.115922 8.91344 -0.115922 9.33199 0.347764L14.6894 6.28295L14.6861 6.28666Z" 
-                            fill="#40403F"/>
+                            <path d="M14.6861 6.28666C15.1046 6.75034 15.1046 7.50337 14.6861 7.96705L9.32864 13.9022C8.9101 14.3659 8.23037 14.3659 7.81182 13.9022C7.39327 13.4385 7.39327 12.6855 7.81182 12.2218L11.3444 8.31204L1.07149 8.31204C0.478821 8.31204 0 7.78158 0 7.125C0 6.46842 0.478821 5.93796 1.07149 5.93796L11.341 5.93796L7.81517 2.02816C7.39662 1.56448 7.39662 0.81145 7.81517 0.347764C8.23372 -0.115922 8.91344 -0.115922 9.33199 0.347764L14.6894 6.28295L14.6861 6.28666Z" fill="#40403F" />
                         </svg>
                     </span>
-                    <button *ngIf="(questionIndex+1) === questionLength" 
-                        class="btn btn-success" (click)="submit()"
-                    >
+                    <button *ngIf="questionIndex + 1 === questionLength" class="btn btn-success" (click)="submit()">
                         Submit
                     </button>
                 </div>
-                <div *ngIf="quiz.questions[questionIndex] as question" 
-                    class="card rounded-4 position-relative" 
-                    style="background-color: #FFFAE7;"
-                >
-                    <div class="card-body p-5">
+
+                <div *ngIf="quiz.questions[questionIndex] as question">
+                    <!-- ✅ Restored Original Image Preview Code -->
+                    <div *ngIf="quiz.questions[questionIndex] as question" >
                         <div *ngIf="question.image" class="d-flex justify-content-center align-items-center m-5">
-                            <img [src]="question.image" height="175" width="175" alt="Question Image">
+                            <img [src]="question.image" class="img-thumbnail preview-image" (click)="showImageModal(question.image)" alt="Preview Image">
                         </div>
-                        <span class="badge bg-dark fs-6 font-monospace"> {{ question.category | titlecase }} </span>
-                        <p class="lh-base my-2">{{ question.question }}</p>
-                        <form [formGroup]="questionsForm" class="my-2">
-                            <div class="d-flex flex-column flex-wrap">
-                                <div class="form-check d-flex align-items-center gap-2" *ngFor="let choice of question.choices; let i = index">
-                                    <input class="form-check-input" type="radio" [formControlName]="question.id.toString()" [value]="choice.id" [id]="'radio-' + i">
-                                    <label class="form-check-label" [for]="'radio-' + i">
-                                        <ng-container *ngIf="question.type === 'image'; else text">
-                                            <img width="75" height="75" [src]="choice.context" alt="context_image" >
-                                        </ng-container>
-                                        <ng-template #text>
-                                            {{ choice.context }}
-                                        </ng-template>
-                                    </label>
-                                </div>
+                        
+                        <!-- Modal -->
+                        <div *ngIf="imageModal" class="modal-overlay" (click)="closeImageModal()">
+                            <div class="modal-content" (click)="$event.stopPropagation()">
+                                <img [src]="imageModalSrc" class="img-fluid zoomable-image" alt="Question Image">
                             </div>
-                        </form>
-                    </div>
+                        </div>
+
+                         <!-- Styles for modal and zooming -->
+                         <style>
+                            .modal-overlay {
+                                position: fixed;
+                                top: 0;
+                                left: 0;
+                                width: 100%;
+                                height: 100%;
+                                background: rgba(0, 0, 0, 0.8);
+                                display: flex;
+                                align-items: center;
+                                justify-content: center;
+                                z-index: 1000;
+                            }
+    
+                         
+                            .preview-image {
+                                width: 300px;
+                                height: 250px;
+                                cursor: pointer;
+                            }
+                            .preview-image:hover {
+                                transform: scale(1.1);
+                            }
+                            .zoomable-image {
+                                max-width: 100%;
+                                max-height: 100vh;
+                                cursor: zoom-in;
+                                transition: transform 0.3s ease-in-out;
+                            }
+                            .zoomable-image:active {
+                                transform: scale(2);
+                                cursor: zoom-out;
+                            }
+                            </style>
+
+                    <span class="badge bg-white fs-6 font-monospace"> {{ question.category | titlecase }} </span>
+                    <p class="lh-base my-2">{{ question.question }}</p>
+                    <form [formGroup]="questionsForm" class="my-2">
+                        <div class="d-flex flex-column flex-wrap">
+                            <div class="form-check d-flex align-items-center gap-2" *ngFor="let choice of question.choices; let i = index">
+                                <input class="form-check-input" type="radio" [formControlName]="question.id.toString()" [value]="choice.id" [id]="'radio-' + i" (change)="checkAnswer(choice, question)">
+                                <label class="form-check-label" [for]="'radio-' + i">
+                                    <ng-container *ngIf="question.type === 'image'; else text">
+                                        <img width="75" height="75" [src]="choice.context" alt="context_image">
+                                    </ng-container>
+                                    <ng-template #text>
+                                        {{ choice.context }}
+                                    </ng-template>
+                                </label>
+                            </div>
+                        </div>
+                    </form>
                 </div>
             </div>
         </div>

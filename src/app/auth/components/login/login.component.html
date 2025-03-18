@@ -1,11 +1,17 @@
-<div class="m-3">
-    <h4 class="text-center font-monospace fw-medium my-4">Login to continue</h4>
+
+<h1 class="text-center fw-bold fs-1 text-dark" style="color: #8E1615;">
+    Login to Continue
+  </h1>
+<p class="text-center text-dark">
+    Learn, practice, and improve your road safety knowledge through interactive learning.
+</p>
+
     <ngb-alert *ngIf="invalidLogin" #alert [type]="'danger'" (closed)="invalidLogin = false">
         <strong>Warning!</strong> {{ errorMessage }}.
     </ngb-alert>
     <form [formGroup]="userForm" (ngSubmit)="login()">
         <div class="d-flex flex-column w-100 gap-3">
-            <input type="string" class="form-control form-control-solid form-control-lg" 
+            <input type="text" class="form-control form-control-solid form-control-lg" 
                 [ngClass]="{ 'is-invalid' : invalidLogin }"
                 formControlName="username" placeholder="Username">
             <input type="password" class="form-control form-control-solid form-control-lg" 
@@ -13,10 +19,74 @@
                 formControlName="password" placeholder="Password">
         </div>
         <div class="d-flex flex-column w-100 gap-3 my-3">
-            <button type="submit" [disabled]="userForm.invalid" class="w-100 btn btn-info mt-4">Login</button>
+            <button type="submit" [disabled]="userForm.invalid" class="w-100 btn btn-info mt-4" style="background-color: #8E1615; color: white; border-color: #8E1615;">Login</button>
             <span class="text-muted text-center fs-6"> Or continue with</span>
             <google-button [type]="'login'" (response)="invalidLogin = true; errorMessage = $event"></google-button>
         </div>
         <span class="fs-7 text-muted">Don't have an account? <a routerLink="/auth/register">Register</a></span>
     </form>
-</div>
+
+
+
+<style>
+    .animated-button {
+        position: relative;
+        display: inline-block;
+        padding: 12px 24px;
+        font-size: 16px;
+        border: none;
+        outline: none;
+        cursor: pointer;
+        transition: all 0.3s ease-in-out;
+    }
+
+    /* Hover animation: Adds a pop-up effect */
+    .animated-button:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+    }
+
+    /* Click animation: Adds a pressed effect */
+    .animated-button:active {
+        transform: translateY(2px);
+        box-shadow: 0 5px 10px rgba(0, 0, 0, 0.15);
+    }
+
+    /* Fixing Angular encapsulation issue */
+    :host ::ng-deep .animated-button {
+        transition: all 0.3s ease-in-out;
+    }
+</style>
+
+
+<script>
+    function switchAuthForm(isRegister) {
+        const authBox = document.getElementById("auth-box");
+
+        // Apply animation for fade-out
+        authBox.style.animation = "slideFadeOut 0.5s ease-out forwards";
+
+        // Wait for animation to finish before switching content
+        setTimeout(() => {
+            // Create new content
+            const newContent = isRegister 
+                ? `<div class="card-body p-5" style="width: 500px;">
+                    <h2>Register</h2>
+                    <p>Register form goes here...</p>
+                    <button onclick="switchAuthForm(false)">Go to Login</button>
+                   </div>`
+                : `<div class="card-body p-5" style="width: 500px;">
+                    <h2>Login</h2>
+                    <p>Login form goes here...</p>
+                    <button onclick="switchAuthForm(true)">Go to Register</button>
+                   </div>`;
+
+            // Replace content safely
+            authBox.innerHTML = newContent;
+
+            // Reapply the fade-in animation
+            authBox.style.animation = "slideFadeIn 0.5s ease-out forwards";
+        }, 500); // Wait for fade-out to finish before switching
+    }
+</script>
+

@@ -1,0 +1,157 @@
+/*... other CSS rules... */.logo-container {
+    width: 500px;
+    height: 200px; 
+    top: 50%; /* Position vertically in the middle */
+    left: 50%; /* Position horizontally in the middle */
+    transform: translate(78.9%, -9%); /* Adjust position to center perfectly */
+  }.logo-image {
+    top: 50%; /* Position vertically in the middle */
+    left: 50%; /* Position horizontally in the middle */
+    transform: translate(28.8%, 6%); /* Adjust position to center perfectly */
+  }
+.falling-images {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    overflow: hidden;
+    pointer-events: auto; /* Keep this if you want the images to be clickable */
+    perspective: 800px; /* Add perspective for a more 3D effect */
+}
+
+.falling-image {
+    position: absolute;
+    width: 80px;
+    height: 80px;
+    /* Remove initial opacity: opacity: 0.9; */
+    animation: fallAnimation linear infinite;
+    /* Improve transition for smoother animation */
+    transition: transform 0.8s ease-out, opacity 0.8s ease-out; /* Add opacity transition */
+    /* Initially position images above the viewport */
+    transform: translateY(-150px); /* Adjust as needed */
+    opacity: 0; /* Initially hidden */
+}
+
+/* ... (your existing nth-child styles for different animation delays and left positions) ... */
+
+@keyframes fallAnimation {
+    0% {
+        transform: translateY(-150px) rotate(0deg); /* Start above viewport */
+        opacity: 0; /* Fade in */
+    }
+    50% {
+        opacity: 1; /* Fully visible in the middle */
+    }
+    100% {
+        transform: translateY(100vh) rotate(360deg); /* Fall to bottom */
+        opacity: 0; /* Fade out */
+    }
+}
+
+
+
+/* General Features Container */
+.container {
+    max-width: 1200px;
+    margin: auto;
+}
+
+/* Module & Quiz Cards */
+.module-card, .quiz-card {
+    background: #FFFAE7;
+    transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+    border: none;
+}
+
+.module-card:hover, .quiz-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.15);
+}
+
+/* Card Title */
+.card-title {
+    font-size: 22px;
+    font-weight: bold;
+    color: #002F6C;
+}
+
+/* Description */
+.module-description, .quiz-description {
+    font-size: 14px;
+    line-height: 1.5;
+    height: 75px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: normal;
+}
+
+/* Badge Styling */
+.module-badge, .quiz-badge {
+    background: white;
+    color: #40403F;
+    font-size: 14px;
+    border: 1px solid #40403F;
+    padding: 5px 10px;
+}
+
+/* Button Icon */
+.module-button, .quiz-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: transform 0.2s ease-in-out;
+}
+
+.module-button:hover, .quiz-button:hover {
+    transform: scale(1.1);
+}
+
+/* RESPONSIVE STYLING */
+@media (max-width: 992px) {
+    .col-md-4 {
+        width: 100%;
+        max-width: 500px;
+    }
+}
+
+@media (max-width: 768px) {
+    .container {
+        padding: 20px;
+    }
+
+    .card-title {
+        font-size: 18px;
+    }
+
+    .module-description, .quiz-description {
+        font-size: 12px;
+    }
+}
+
+/* Frosted Glass Effect */
+.frosted-glass {
+    background: rgba(255, 255, 255, 0.2); /* Transparent white */
+    backdrop-filter: blur(15px); /* Increases blur effect */
+    -webkit-backdrop-filter: blur(15px); /* Safari support */
+    box-shadow: 0px 8px 32px rgba(0, 0, 0, 0.2); /* Smooth shadow */
+    border: 1px solid rgba(255, 255, 255, 0.3); /* Subtle border */
+    border-radius: 15px; /* Rounded corners */
+}
+
+/* Improve Visibility of Frosted Background */
+.frosted-glass-light {
+    background: rgba(255, 255, 255, 0.25); /* Slightly stronger white */
+    backdrop-filter: blur(12px); /* Less blur than main frosted */
+}
+
+/* Ensure Text Stands Out */
+.frosted-glass h1,
+.frosted-glass p,
+.frosted-glass span {
+    color: #000; /* Darker text for readability */
+}
+
+
+

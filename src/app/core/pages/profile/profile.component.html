@@ -1,60 +1,62 @@
-<div class="row gx-4 gy-4 px-5">
-    <div class="col-4">
-        <leaderboard></leaderboard>
-    </div>
-    <div class="col-4">
-        <engagements></engagements>
-    </div>
-    <div class="col-4">
-        <content-hours></content-hours>
-    </div>
-    <div class="col-12">
-        <user-details></user-details>
-    </div>
-    <div class="col-12">
-        <h1 class="fw-semibold">Progress</h1>
-        <div class="row justify-content-center gap-5">
-            <div class="col-3" *ngFor="let module of modules$ | async; let i = index">
-                <div class="card rounded-4" style="width: 250px;">
-                    <div class="card-body">
-                        <div class="d-flex flex-column align-items-center justify-content-center gap-2">
-                            <span class="fs-3 fw-semibold text-truncate w-75">{{ module.title }}</span>
-                            <apx-chart
-                                [series]="chartOptions[i].series"
-                                [colors]="chartOptions[i].colors"
-                                [chart]="chartOptions[i].chart"
-                                [labels]="chartOptions[i].labels"
-                                [plotOptions]="chartOptions[i].plotOptions"
-                                [dataLabels]="chartOptions[i].dataLabels"
-                                [legend]="chartOptions[i].legend"
-                            ></apx-chart>
+<div class="frosted-glass-panel p-4 rounded-4">
+    <div class="row gx-4 gy-4 px-5">
+        <div class="col-4">
+            <leaderboard></leaderboard>
+        </div>
+        <div class="col-4">
+            <engagements></engagements>
+        </div>
+        <div class="col-4">
+            <content-hours></content-hours>
+        </div>
+        <div class="col-12">
+            <user-details></user-details>
+        </div>
+        <div class="col-12">
+            <h1 class="fw-semibold">Progress</h1>
+            <div class="row justify-content-center gap-5">
+                <div class="col-3" *ngFor="let module of modules$ | async; let i = index">
+                    <div class="card rounded-4" style="width: 250px;">
+                        <div class="card-body">
+                            <div class="d-flex flex-column align-items-center justify-content-center gap-2">
+                                <span class="fs-3 fw-semibold text-truncate w-75">{{ module.title }}</span>
+                                <apx-chart
+                                    [series]="chartOptions[i].series"
+                                    [colors]="chartOptions[i].colors"
+                                    [chart]="chartOptions[i].chart"
+                                    [labels]="chartOptions[i].labels"
+                                    [plotOptions]="chartOptions[i].plotOptions"
+                                    [dataLabels]="chartOptions[i].dataLabels"
+                                    [legend]="chartOptions[i].legend"
+                                ></apx-chart>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
-    <div class="col-12">
-        <div class="card rounded-4 w-100">
-            <div class="card-body p-4 w-100">
-                <ul ngbNav #nav="ngbNav" [(activeId)]="active" class="nav-tabs">
-                    <li [ngbNavItem]="1">
-                        <button ngbNavLink>Activity History</button>
-                        <ng-template ngbNavContent>
-                            <div class="table-responsive">
-                                <table class="table table-hover table-striped gx-5 gy-5">
-                                    <thead class="text-muted fs-7">
-                                        <tr>
-                                            <th style="width: 450px;">Quiz Name</th>
-                                            <th>Date Taken</th>
-                                            <th>Duration</th>
-                                            <th>Score</th>
-                                            <th></th>
-                                        </tr>
-                                    </thead>
-                                    <tbody class="table-group-divider fs-6" *ngIf="activityHistory$ | async as activities">
-                                        <ng-container *ngIf="activities.length > 0; else noActivity">
-                                            <tr *ngFor="let activity of activities">
+
+        <!-- Activity History & Bookmarks Section -->
+        <div class="col-12">
+            <div class="card rounded-4 w-100">
+                <div class="card-body p-4 w-100">
+                    <ul ngbNav #nav="ngbNav" [(activeId)]="active" class="nav-tabs">
+                        <li [ngbNavItem]="1">
+                            <button ngbNavLink>Activity History</button>
+                            <ng-template ngbNavContent>
+                                <div class="table-responsive">
+                                    <table class="table table-hover table-striped gx-5 gy-5">
+                                        <thead class="text-muted fs-7">
+                                            <tr>
+                                                <th style="width: 450px;">Quiz Name</th>
+                                                <th>Date Taken</th>
+                                                <th>Duration</th>
+                                                <th>Score</th>
+                                                <th>Actions</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody class="table-group-divider fs-6" *ngIf="pagedActivities.length > 0">
+                                            <tr *ngFor="let activity of pagedActivities">
                                                 <td>
                                                     <div class="d-flex align-items-center gap-3">
                                                         <img [src]="activity.activity.image || 'https://pngimg.com/d/question_mark_PNG99.png'" height="50" width="50" alt="activity_picture">
@@ -65,42 +67,56 @@
                                                 <td>{{ activity.duration }} minutes</td>
                                                 <td>{{ activity.score }} points</td>
                                                 <td>
-                                                    <div class="d-flex justify-content-center align-items-center gap-3">
-                                                        <span role="button" routerLink="/quiz/{{ activity.activity.id }}">
-                                                            <svg width="25" height="25" viewBox="0 0 31 30" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                                                <path d="M28.0635 13.125H28.5782C29.3834 13.125 30.0313 12.498 30.0313 11.7187V4.21874C30.0313 3.65038 29.6801 3.13476 29.1352 2.91796C28.5903 2.70116 27.9667 2.81835 27.5489 3.22265L25.0301 5.66015C19.7262 0.591789 11.1831 0.609368 5.90942 5.71874C0.611572 10.8457 0.611572 19.1543 5.90942 24.2812C11.2073 29.4082 19.7928 29.4082 25.0907 24.2812C25.8475 23.5488 25.8475 22.3594 25.0907 21.6269C24.3338 20.8945 23.1047 20.8945 22.3479 21.6269C18.5637 25.2891 12.4303 25.2891 8.64614 21.6269C4.86196 17.9648 4.86196 12.0293 8.64614 8.36718C12.4122 4.72265 18.4971 4.70507 22.2874 8.30859L19.7989 10.7226C19.3811 11.1269 19.26 11.7305 19.484 12.2578C19.7081 12.7851 20.2409 13.125 20.8282 13.125H28.0635Z" fill="black"/>
-                                                            </svg>
-                                                        </span>
+                                                    <div class="d-flex justify-content-center align-items-center gap-2">
+                                                        <!-- Retake Button -->
+                                                        <button class="btn btn-primary" (click)="retakeQuiz(activity.activity.id)">Retake</button>
+                                                        <!-- Delete Button -->
+                                                        <button class="btn btn-danger" (click)="deleteActivity(activity)">Delete</button>
                                                     </div>
                                                 </td>
                                             </tr>
-                                        </ng-container>
-                                        <ng-template #noActivity>
+                                        </tbody>
+                                        <tbody *ngIf="pagedActivities.length === 0">
                                             <tr>
                                                 <td colspan="5" class="text-center">No Activity History found.</td>
-                                              </tr>
-                                        </ng-template>
-                                    </tbody>
-                                </table>
-                            </div>
-                        </ng-template>
-                    </li>
-                    <li [ngbNavItem]="2">
-                        <button ngbNavLink>Bookmarks</button>
-                        <ng-template ngbNavContent>
-                            <div class="table-responsive">
-                                <table class="table table-hover table-striped gx-5 gy-5">
-                                    <thead class="text-muted fs-7">
-                                        <tr>
-                                            <th style="width: 450px;">Module Name</th>
-                                            <th>Date</th>
-                                            <th>Page</th>
-                                            <th></th>
-                                        </tr>
-                                    </thead>
-                                    <tbody class="table-group-divider fs-6" *ngIf="bookmarks$ | async as bookmarks">
-                                        <ng-container *ngIf="bookmarks.length > 0; else noActivity">
-                                            <tr *ngFor="let bookmark of bookmarks">
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+
+                                <!-- Pagination -->
+                                <nav aria-label="Activity pagination" *ngIf="totalActivityPages > 1">
+                                    <ul class="pagination justify-content-center">
+                                        <li class="page-item" [class.disabled]="currentActivityPage === 1">
+                                            <a class="page-link" (click)="changeActivityPage(currentActivityPage - 1)">Previous</a>
+                                        </li>
+                                        <li class="page-item" *ngFor="let page of [].constructor(totalActivityPages); let i = index"
+                                            [class.active]="(i + 1) === currentActivityPage">
+                                            <a class="page-link" (click)="changeActivityPage(i + 1)">{{ i + 1 }}</a>
+                                        </li>
+                                        <li class="page-item" [class.disabled]="currentActivityPage === totalActivityPages">
+                                            <a class="page-link" (click)="changeActivityPage(currentActivityPage + 1)">Next</a>
+                                        </li>
+                                    </ul>
+                                </nav>
+                            </ng-template>
+                        </li>
+
+                        <li [ngbNavItem]="2">
+                            <button ngbNavLink>Bookmarks</button>
+                            <ng-template ngbNavContent>
+                                <div class="table-responsive">
+                                    <table class="table table-hover table-striped gx-5 gy-5">
+                                        <thead class="text-muted fs-7">
+                                            <tr>
+                                                <th style="width: 450px;">Module Name</th>
+                                                <th>Date</th>
+                                                <th>Page</th>
+                                                <th>Actions</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody class="table-group-divider fs-6" *ngIf="pagedBookmarks.length > 0">
+                                            <tr *ngFor="let bookmark of pagedBookmarks">
                                                 <td>
                                                     <div class="d-flex align-items-center gap-3">
                                                         <img [src]="bookmark.module.image || 'https://pngimg.com/d/question_mark_PNG99.png'" height="50" width="50" alt="module_picture">
@@ -110,47 +126,44 @@
                                                 <td>{{ bookmark.created_at }}</td>
                                                 <td>{{ bookmark.viewed_lessons }}/{{ bookmark.total_lessons }}</td>
                                                 <td>
-                                                    <div class="d-flex justify-content-center align-items-center gap-3">
-                                                        <span role="button" (click)="bookmarkAction(bookmark.module.id)">
-                                                            <svg width="25" height="25" viewBox="0 0 23 30" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                                                <g clip-path="url(#clip0_161_28)">
-                                                                <path d="M5.94107 1.03711L5.57143 1.875H0.642857C-0.265848 1.875 -1 2.71289 -1 3.75C-1 4.78711 -0.265848 5.625 0.642857 5.625H20.3571C21.2658 5.625 22 4.78711 22 3.75C22 2.71289 21.2658 1.875 20.3571 1.875H15.4286L15.0589 1.03711C14.7817 0.398438 14.2118 0 13.5906 0H7.40938C6.78817 0 6.2183 0.398438 5.94107 1.03711ZM20.3571 7.5H0.642857L1.73125 27.3633C1.81339 28.8457 2.89152 30 4.1904 30H16.8096C18.1085 30 19.1866 28.8457 19.2687 27.3633L20.3571 7.5Z" fill="black"/>
-                                                                </g>
-                                                                <defs>
-                                                                <clipPath id="clip0_161_28">
-                                                                <rect width="23" height="30" fill="white"/>
-                                                                </clipPath>
-                                                                </defs>
-                                                            </svg>
-                                                        </span>
-                                                        <span role="button" routerLink="/module/{{bookmark.module.id}}">
-                                                            <svg width="25" height="25" viewBox="0 0 41 35" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                                                <g clip-path="url(#clip0_161_39)">
-                                                                <path d="M20.5002 2.1875C14.7488 2.1875 10.1434 4.70312 6.7908 7.69727C3.45955 10.6641 1.2316 14.2188 0.178125 16.6592C-0.0567708 17.1992 -0.0567708 17.8008 0.178125 18.3408C1.2316 20.7812 3.45955 24.3359 6.7908 27.3027C10.1434 30.2969 14.7488 32.8125 20.5002 32.8125C26.2516 32.8125 30.8569 30.2969 34.2095 27.3027C37.5408 24.3291 39.7687 20.7812 40.8293 18.3408C41.0642 17.8008 41.0642 17.1992 40.8293 16.6592C39.7687 14.2188 37.5408 10.6641 34.2095 7.69727C30.8569 4.70312 26.2516 2.1875 20.5002 2.1875ZM10.2502 17.5C10.2502 14.8893 11.3301 12.3855 13.2523 10.5394C15.1746 8.69336 17.7817 7.65625 20.5002 7.65625C23.2186 7.65625 25.8258 8.69336 27.748 10.5394C29.6703 12.3855 30.7502 14.8893 30.7502 17.5C30.7502 20.1107 29.6703 22.6145 27.748 24.4606C25.8258 26.3066 23.2186 27.3438 20.5002 27.3438C17.7817 27.3438 15.1746 26.3066 13.2523 24.4606C11.3301 22.6145 10.2502 20.1107 10.2502 17.5ZM20.5002 13.125C20.5002 15.5381 18.4573 17.5 15.9446 17.5C15.4392 17.5 14.9552 17.418 14.4997 17.2744C14.1082 17.1514 13.6526 17.3838 13.6668 17.7803C13.6882 18.252 13.7594 18.7236 13.8946 19.1953C14.8698 22.6953 18.621 24.7734 22.2654 23.8369C25.9099 22.9004 28.0738 19.2979 27.0986 15.7979C26.3085 12.9609 23.6962 11.0537 20.792 10.9375C20.3792 10.9238 20.1372 11.3545 20.2653 11.7373C20.4148 12.1748 20.5002 12.6396 20.5002 13.125Z" fill="black"/>
-                                                                </g>
-                                                                <defs>
-                                                                <clipPath id="clip0_161_39">
-                                                                <rect width="41" height="35" fill="white"/>
-                                                                </clipPath>
-                                                                </defs>
-                                                            </svg>
-                                                        </span>
+                                                    <div class="d-flex justify-content-center align-items-center gap-2">
+                                                        <!-- View Button -->
+                                                        <button class="btn btn-primary" (click)="viewModule(bookmark.module.id)">View</button>
+                                                        <!-- Delete Button -->
+                                                        <button class="btn btn-danger" (click)="activity ? deleteActivity(activity) : null">Delete</button>
+
                                                     </div>
                                                 </td>
                                             </tr>
-                                        </ng-container>
-                                        <ng-template #noActivity>
+                                        </tbody>
+                                        <tbody *ngIf="pagedBookmarks.length === 0">
                                             <tr>
-                                                <td colspan="5" class="text-center">No Bookmarks found.</td>
-                                              </tr>
-                                        </ng-template>
-                                    </tbody>
-                                </table>
-                            </div>
-                        </ng-template>
-                    </li>
-                </ul>
-                <div [ngbNavOutlet]="nav" class="mt-2"></div>
+                                                <td colspan="4" class="text-center">No Bookmarks found.</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+
+                                <!-- Pagination -->
+                                <nav aria-label="Bookmark pagination" *ngIf="totalBookmarkPages > 1">
+                                    <ul class="pagination justify-content-center">
+                                        <li class="page-item" [class.disabled]="currentBookmarkPage === 1">
+                                            <a class="page-link" (click)="changeBookmarkPage(currentBookmarkPage - 1)">Previous</a>
+                                        </li>
+                                        <li class="page-item" *ngFor="let page of [].constructor(totalBookmarkPages); let i = index"
+                                            [class.active]="(i + 1) === currentBookmarkPage">
+                                            <a class="page-link" (click)="changeBookmarkPage(i + 1)">{{ i + 1 }}</a>
+                                        </li>
+                                        <li class="page-item" [class.disabled]="currentBookmarkPage === totalBookmarkPages">
+                                            <a class="page-link" (click)="changeBookmarkPage(currentBookmarkPage + 1)">Next</a>
+                                        </li>
+                                    </ul>
+                                </nav>
+                            </ng-template>
+                        </li>
+                    </ul>
+                    <div [ngbNavOutlet]="nav" class="mt-2"></div>
+                </div>
             </div>
         </div>
     </div>

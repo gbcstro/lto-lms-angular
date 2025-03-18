@@ -1,24 +1,25 @@
-import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { Component, OnInit } from '@angular/core'; 
+import { Observable } from 'rxjs';
 import { AuthService } from '../../../auth/services/auth.service';
 import { User } from '../../../interfaces/user';
-import { Observable } from 'rxjs';
 
 @Component({
   selector: 'nav-bar',
   templateUrl: './nav-bar.component.html',
-  styleUrl: './nav-bar.component.scss'
+  styleUrls: ['./nav-bar.component.scss']
 })
 export class NavBarComponent implements OnInit {
-  user$!: Observable<User | null>
+  user$!: Observable<User | null>;
+  user: User | null = null;
 
-  constructor(
-    private authService: AuthService
-  ) { 
+  constructor(private authService: AuthService) { 
     this.user$ = this.authService.user$;
   }
 
   ngOnInit(): void {
-    
+    // Subscribe to the user observable and assign the value to `user`
+    this.user$.subscribe(user => {
+      this.user = user;
+    });
   }
 }

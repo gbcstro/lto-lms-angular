@@ -1,19 +1,19 @@
-<div class="card rounded-4" style="background-color: #FFFAE6;" *ngIf="timeData$ | async as timeData">
+<div class="card rounded-4 frosted-glass" style="background-color: #8E1615; color: white;" *ngIf="timeData$ | async as timeData">
     <div class="card-body p-3">
         <div class="d-flex flex-row justify-content-between align-items-center">
             <div class="d-flex flex-column">
-                <span class="fs-4 fw-medium"> {{ timeData.formatted_time}} </span>
-                <span class="fs-7">Total Content Time</span>
+                <span class="fs-4 fw-medium; color: white;">{{ timeData.formatted_time }}</span>
+                <span class="fs-7; color: white;">Total Content Time</span>
             </div>
             <span>
-                <svg width="67" height="63" viewBox="0 0 67 63" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <svg width="67" height="63" viewBox="0 0 67 63" fill="white" xmlns="http://www.w3.org/2000/svg">
                     <g clip-path="url(#clip0_102_236)">
-                    <path d="M33.5 0C42.3848 0 50.9056 3.31874 57.1881 9.22614C63.4705 15.1335 67 23.1457 67 31.5C67 39.8543 63.4705 47.8665 57.1881 53.7739C50.9056 59.6813 42.3848 63 33.5 63C24.6152 63 16.0944 59.6813 9.81192 53.7739C3.52945 47.8665 0 39.8543 0 31.5C0 23.1457 3.52945 15.1335 9.81192 9.22614C16.0944 3.31874 24.6152 0 33.5 0ZM30.3594 14.7656V31.5C30.3594 32.4844 30.8828 33.4072 31.7596 33.9609L44.3221 41.8359C45.7615 42.7465 47.7113 42.3773 48.6797 41.0115C49.648 39.6457 49.2555 37.8246 47.8029 36.9141L36.6406 29.925V14.7656C36.6406 13.1291 35.2404 11.8125 33.5 11.8125C31.7596 11.8125 30.3594 13.1291 30.3594 14.7656Z" fill="black"/>
+                        <path d="M33.5 0C42.3848 0 50.9056 3.31874 57.1881 9.22614C63.4705 15.1335 67 23.1457 67 31.5C67 39.8543 63.4705 47.8665 57.1881 53.7739C50.9056 59.6813 42.3848 63 33.5 63C24.6152 63 16.0944 59.6813 9.81192 53.7739C3.52945 47.8665 0 39.8543 0 31.5C0 23.1457 3.52945 15.1335 9.81192 9.22614C16.0944 3.31874 24.6152 0 33.5 0ZM30.3594 14.7656V31.5C30.3594 32.4844 30.8828 33.4072 31.7596 33.9609L44.3221 41.8359C45.7615 42.7465 47.7113 42.3773 48.6797 41.0115C49.648 39.6457 49.2555 37.8246 47.8029 36.9141L36.6406 29.925V14.7656C36.6406 13.1291 35.2404 11.8125 33.5 11.8125C31.7596 11.8125 30.3594 13.1291 30.3594 14.7656Z" fill="white"/> 
                     </g>
                     <defs>
-                    <clipPath id="clip0_102_236">
-                    <rect width="67" height="63" fill="white"/>
-                    </clipPath>
+                        <clipPath id="clip0_102_232">
+                            <rect width="40" height="56" fill="white" />
+                        </clipPath>
                     </defs>
                 </svg>
             </span>

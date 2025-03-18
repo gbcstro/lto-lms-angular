@@ -1,0 +1,268 @@
+/* Floating Navigation Bar */.floating-nav {
+    position: fixed;
+    top: 50px; /* Move to top */
+    /* Remove left: 200px; */ 
+    z-index: 1000; /* Ensure it stays on top */
+    /* Initial state */
+    opacity: 0; 
+    /* Remove initial transform: translateY(-50px); */
+    transition: opacity 0.5s ease-in-out; /* Smooth transitions for opacity only */
+    animation: navAnimation 1s ease-in-out forwards; /* Animate on load */
+    margin-left: -140px; /* Adjust this value as needed */
+
+}
+
+/*... rest of your CSS... */
+
+@keyframes navAnimation {
+    to {
+        /* Remove transform: translateY(0); */ 
+        opacity: 1;
+    }
+}
+/* Navigation Card */
+.nav-card {
+    background: rgb(255,255,255);
+    backdrop-filter: blur(10px);
+    box-shadow: 0px 8px 32px rgba(0, 0, 0, 0.2);
+    border-radius: 5px;
+    padding: 8px;
+    width: auto;
+    display: flex;
+    flex-direction: column; /* Stack items vertically */
+    align-items: center;
+    justify-content: space-between;
+}
+
+/* Navigation Links */
+.nav-link {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-decoration: none;
+    color: #40403F;
+    font-size: 14px;
+    font-weight: 600;
+    transition: transform 0.2s ease-in-out, color 0.3s;
+    padding: 10px;
+}
+
+/* Hover Effect */
+.nav-link:hover {
+    transform: scale(1.1);
+    color: #002F6C;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .floating-nav {
+        top: 10px;
+        left: 10px;
+    }
+
+    .nav-card {
+        padding: 10px;
+    }
+
+    .nav-link span {
+        font-size: 12px;
+    }
+}
+
+
+@keyframes navAnimation {
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+.logo-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: -30px; /* Adjust spacing */
+}
+
+.logo-container img {
+    width: 500px; /* Set size */
+    height: auto; /* Maintain aspect ratio */
+    max-width: 500%;
+    transition: transform 0.3s ease-in-out;
+}
+
+/* Add hover effect */
+.logo-container img:hover {
+    transform: scale(1.1); /* Slightly increase size on hover */
+}
+
+
+/* General Features Container */
+.container {
+    max-width: 1200px;
+    margin: auto;
+}
+
+/* Module & Quiz Cards */
+.module-card, .quiz-card {
+    background: #FFFAE7;
+    transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+    border: none;
+}
+
+.module-card:hover, .quiz-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.15);
+}
+
+/* Card Title */
+.card-title {
+    font-size: 22px;
+    font-weight: bold;
+    color: #002F6C;
+}
+
+/* Description */
+.module-description, .quiz-description {
+    font-size: 14px;
+    line-height: 1.5;
+    height: 75px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: normal;
+}
+
+/* Badge Styling */
+.module-badge, .quiz-badge {
+    background: white;
+    color: #40403F;
+    font-size: 14px;
+    border: 1px solid #40403F;
+    padding: 5px 10px;
+}
+
+/* Button Icon */
+.module-button, .quiz-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: transform 0.2s ease-in-out;
+}
+
+.module-button:hover, .quiz-button:hover {
+    transform: scale(1.1);
+}
+
+/* RESPONSIVE STYLING */
+@media (max-width: 992px) {
+    .col-md-4 {
+        width: 100%;
+        max-width: 500px;
+    }
+}
+
+@media (max-width: 768px) {
+    .container {
+        padding: 20px;
+    }
+
+    .card-title {
+        font-size: 18px;
+    }
+
+    .module-description, .quiz-description {
+        font-size: 12px;
+    }
+}
+
+/* Frosted Glass Effect */
+.frosted-glass {
+    background: rgba(255, 255, 255, 0.2); /* Transparent white */
+    backdrop-filter: blur(35px); /* Increases blur effect */
+    -webkit-backdrop-filter: blur(15px); /* Safari support */
+    box-shadow: 0px 8px 32px rgba(0, 0, 0, 0.2); /* Smooth shadow */
+    border: 1px solid rgba(255, 255, 255, 0.3); /* Subtle border */
+    border-radius: 15px; /* Rounded corners */
+}
+
+/* Improve Visibility of Frosted Background */
+.frosted-glass-light {
+    background: rgba(255, 255, 255, 0.25); /* Slightly stronger white */
+    backdrop-filter: blur(12px); /* Less blur than main frosted */
+}
+
+/* Ensure Text Stands Out */
+.frosted-glass h1,
+.frosted-glass p,
+.frosted-glass span {
+    color: #000; /* Darker text for readability */
+}
+
+
+ /* ✅ FULL RESPONSIVENESS FIXED ✅ */
+ @media (max-width: 1024px) {
+    .container {
+        flex-direction: column;
+        text-align: center;
+        gap: 20px;
+    }
+
+    .content-container {
+        max-width: 100%;
+    }
+
+    .auth-container {
+        width: 100%;
+    }
+}
+
+@media (max-width: 768px) {
+    .main-title {
+        font-size: 32px;
+    }
+
+    .main-subtitle {
+        font-size: 18px;
+    }
+
+    .main-text {
+        font-size: 14px;
+    }
+
+    .logo-container img {
+        width: 150px;
+    }
+
+    .falling-image {
+        width: 8vw;
+    }
+}
+
+@media (max-width: 480px) {
+    .container {
+        padding: 20px;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .main-title {
+        font-size: 28px;
+    }
+
+    .main-subtitle {
+        font-size: 16px;
+    }
+
+    .main-text {
+        font-size: 12px;
+    }
+
+    .frosted-glass {
+        padding: 15px;
+    }
+
+    .falling-image {
+        width: 10vw;
+    }
+}

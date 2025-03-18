@@ -1,30 +1,27 @@
-<h1 class="fw-bold font-monospace px-5">Quizzes</h1>
 <div class="d-flex flex-column justify-content-around gap-5 mx-5">
-    <div
-        *ngFor="let quiz of quizzes$ | async; let i = index" 
-        class="card card-xxl-stretch rounded-4 user-select-none"
-        style="height: 250px;"
+    <div 
+        *ngFor="let quiz of (quizzes$ | async)?.slice(0, 3); let i = index" 
+        class="card card-xxl-stretch rounded-4 user-select-none frosted-glass" 
+        role="button" 
+        (click)="take(quiz.id, $event)"
     >
         <div class="card-body p-3">
             <div class="d-flex flex-row justify-content-center align-items-center h-100 gap-3">
                 <div class="col-4 d-flex justify-content-center align-items-center mx-4">
-                    <img [src]="quiz.image || 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTaKl3SXWtGi6MYxpJElmY8smMg3I0vtZYPVA&s'" height="175" width="175" alt="Module Image">
+                    <img [src]="quiz.image || 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTaKl3SXWtGi6MYxpJElmY8smMg3I0vtZYPVA&s'" 
+                        height="175" width="175" alt="Quiz Image" class="rounded-3">
                 </div>
                 <div class="col-4 d-flex flex-column">
                     <h2 class="card-title fw-bold truncate-two-lines">{{quiz.title}}</h2>
-                    <div class="text-truncate lh-base w-75" style=" height: 75px;">
+                    <div class="lh-base w-75">
                         {{quiz.description}}
                     </div>
                 </div>
-                <div class="col-3">
-                    <div class="d-flex flex-column justify-content-center align-items-center">
-                        <span class="fs-2">
-                            {{ quiz.questions.length }} <span class="text-secondary fs-4">items</span>
-                        </span>
-                        <button class="btn btn-primary" (click)="take(quiz.id, $event)">
-                            Take Quiz
-                        </button>
-                    </div>
+                <div class="col-4 d-flex flex-column align-items-center justify-content-center gap-2">
+                    <span class="fs-2">
+                        {{ quiz.questions.length }} <span class="text-secondary fs-4">items</span>
+                    </span>
+                    <button class="btn btn-primary btn-sm" (click)="take(quiz.id, $event)">Take Quiz</button>
                 </div>
             </div>
         </div>

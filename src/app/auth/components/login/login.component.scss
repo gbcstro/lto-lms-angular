@@ -1,0 +1,104 @@
+/* YourComponent.component.css (or the appropriate CSS file) */
+
+
+/* General Features Container */
+.container {
+    max-width: 1200px;
+    margin: auto;
+}
+
+/* Module & Quiz Cards */
+.module-card, .quiz-card {
+    background: white;
+    transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+    border: none;
+    color: black;
+}
+
+.module-card:hover, .quiz-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.15);
+}
+
+/* Card Title */
+.card-title {
+    font-size: 22px;
+    font-weight: bold;
+    color: #8E1615;
+}
+
+/* Description */
+.module-description, .quiz-description {
+    font-size: 14px;
+    line-height: 1.5;
+    height: 75px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: normal;
+    color: black;
+}
+
+/* Badge Styling */
+.module-badge, .quiz-badge {
+    background: white;
+    color: #40403F;
+    font-size: 14px;
+    border: 1px solid #40403F;
+    padding: 5px 10px;
+}
+
+/* Button Icon */
+.module-button, .quiz-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: transform 0.2s ease-in-out;
+}
+
+.module-button:hover, .quiz-button:hover {
+    transform: scale(1.1);
+}
+
+/* RESPONSIVE STYLING */
+@media (max-width: 992px) {
+    .col-md-4 {
+        width: 100%;
+        max-width: 500px;
+    }
+}
+
+@media (max-width: 768px) {
+    .container {
+        padding: 20px;
+    }
+
+    .card-title {
+        font-size: 18px;
+    }
+
+    .module-description, .quiz-description {
+        font-size: 12px;
+    }
+}
+
+/* Frosted Glass Effect */
+.frosted-glass {
+    background: rgb(255, 255, 255);
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
+    box-shadow: 0px 8px 32px rgba(0, 0, 0, 0.2);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    border-radius: 15px;
+}
+
+/* Ensure Text Stands Out */
+.frosted-glass h1,
+.frosted-glass p,
+.frosted-glass span {
+    color: #8E1615;
+}
+
+h1.text-center.fw-bold.fs-1.text-dark {
+    color: #8E1615;
+  }

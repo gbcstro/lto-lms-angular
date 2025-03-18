@@ -1,11 +1,174 @@
-<div class="d-flex w-100 justify-content-end align-items-center gap-2 pt-2" *ngIf="user$ | async as user">
+<div class="logo-container">
+    <img src="./assets/Icons.gif" class="logo-image" alt="Logo Placeholder">
+</div>
+
+<style>
+    /* Layout */
+    .container {
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        padding: 0 5%;
+        gap: 40px;
+    }
+
+    /* Left Side: Description */
+    .content-container {
+        max-width: 600px;
+        flex: 1;
+        text-align: left;
+    }
+
+    .logo-container img {
+        width: 200px;
+        height: auto;
+    }
+
+    .main-title {
+        font-size: 42px;
+        font-weight: bold;
+        color: #002F6C;
+    }
+
+    .main-subtitle {
+        font-size: 20px;
+        font-weight: bold;
+        color: #002F6C;
+        margin-bottom: 20px;
+    }
+
+    .main-text {
+        font-size: 16px;
+        line-height: 1.5;
+        color: #1a1a1a;
+        margin-bottom: 15px;
+    }
+
+    /* Right Side: Login Box */
+    .auth-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 400px;
+        max-width: 90%;
+    }
+
+    .frosted-glass {
+        background: rgba(255, 255, 255, 0.2);
+        backdrop-filter: blur(10px);
+        box-shadow: 0px 8px 32px rgba(0, 0, 0, 0.2);
+        border: 1px solid rgba(255, 255, 255, 0.3);
+        padding: 20px;
+        width: 100%;
+        text-align: center;
+        border-radius: 15px;
+    }
+
+    /* ✅ FULL RESPONSIVENESS FIXED ✅ */
+    @media (max-width: 1024px) {
+        .container {
+            flex-direction: column;
+            text-align: center;
+            gap: 20px;
+        }
+
+        .content-container {
+            max-width: 100%;
+        }
+
+        .auth-container {
+            width: 100%;
+        }
+    }
+
+    @media (max-width: 768px) {
+        .main-title {
+            font-size: 32px;
+        }
+
+        .main-subtitle {
+            font-size: 18px;
+        }
+
+        .main-text {
+            font-size: 14px;
+        }
+
+        .logo-container img {
+            width: 150px;
+        }
+
+        .falling-image {
+            width: 8vw;
+        }
+    }
+
+    @media (max-width: 480px) {
+        .container {
+            padding: 20px;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .main-title {
+            font-size: 28px;
+        }
+
+        .main-subtitle {
+            font-size: 16px;
+        }
+
+        .main-text {
+            font-size: 12px;
+        }
+
+        .frosted-glass {
+            padding: 15px;
+        }
+
+        .falling-image {
+            width: 10vw;
+        }
+    }
+</style>
+
+
+<style>
+    /* ... (your existing CSS styles) ... */
+
+    /* Position the logout button */
+    .logout-container {
+        position: absolute; /* Or fixed, depending on your layout */
+        top: 20px; /* Adjust as needed */
+        right: 20px; /* Adjust as needed */
+        z-index: 100; /* Ensure it's above other elements, especially falling images */
+    }
+
+    /* Style the logout button (optional) */
+    .logout-button {
+        background-color: #f0ad4e; /* Example: Yellow, like your original button */
+        color: white;
+        padding: 8px 16px;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+    }
+
+
+</style>
+
+
+<div class="logout-container" *ngIf="user$ | async as user">
     <span class="text-black fs-5">
         Hello, {{ user.username }}
     </span>
-    <button class="btn btn-warning" (click)="logout()">
+    <button class="logout-button" (click)="logout()">
         Logout
     </button>
 </div>
+
 <main class="d-flex flex-row gap-2 pt-2">
     <div style="width: 120px;">
         <nav-bar></nav-bar>

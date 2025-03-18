@@ -1,23 +1,19 @@
-<h1 class="fw-bold font-monospace px-5">FEATURES</h1>
-<div class="d-flex flex-column gap-5 my-2">
-    <div class="d-flex flex-row justify-content-around gap-2">
-        <div
-            *ngFor="let module of modules$ | async; let i = index" 
-            class="card card-xxl-stretch rounded-4"
-            style="width: 300px;"
-            [ngStyle]="{'background-color': i % 2 === 0 ? '#FFFAE7' : 'white'}"
-        >
-            <div class="card-body p-5">
-                <h2 class="card-title fw-bold truncate-two-lines">{{module.title}}</h2>
-                <span class="badge rounded-pill text-bg-light fs-6 border border-secondary">Module</span>
-                <div class="d-flex justify-content-center align-items-center my-4">
-                    <img [src]="module.image" width="125" height="125" alt="Module Image">
-                </div>
-                <div class="d-flex align-items-end gap-4">
-                    <div class="text-break lh-base">
-                        {{module.description}}
+
+
+<div class="container">
+    <div class="row justify-content-center g-4">
+
+        <!-- Display 3 MODULES Only -->
+        <div *ngFor="let module of (modules$ | async)?.slice(0,3); let i = index" class="col-md-4">
+            <div class="card module-card frosted-glass">
+                <div class="card-body text-center">
+                    <h2 class="card-title fw-bold">{{ module.title }}</h2>
+                    <span class="badge rounded-pill module-badge">Module</span>
+                    <div class="d-flex justify-content-center my-3">
+                        <img [src]="module.image" width="125" height="125" alt="Module Image">
                     </div>
-                    <span role="button" routerLink="/module/{{module.id}}">
+                    <p class="module-description">{{ module.description }}</p>
+                    <span role="button" class="module-button" routerLink="/module/{{module.id}}">
                         <svg width="16" height="17" viewBox="0 0 16 17" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <path d="M15.6643 9.25038C16.1107 8.83534 16.1107 8.16132 15.6643 7.74628L9.95 2.43378C9.50357 2.01874 8.77857 2.01874 8.33214 2.43378C7.88571 2.84882 7.88571 3.52284 8.33214 3.93788L12.1 7.43749H1.14286C0.510714 7.43749 0 7.91229 0 8.49999C0 9.08768 0.510714 9.56249 1.14286 9.56249H12.0964L8.33571 13.0621C7.88929 13.4771 7.88929 14.1512 8.33571 14.5662C8.78214 14.9812 9.50714 14.9812 9.95357 14.5662L15.6679 9.2537L15.6643 9.25038Z" fill="#40403F"/>
                         </svg>
@@ -25,25 +21,18 @@
                 </div>
             </div>
         </div>
-    </div>
-    <div class="d-flex flex-row justify-content-around gap-2">
-        <div
-            *ngFor="let quiz of quizzes$ | async; let i = index" 
-            class="card card-xxl-stretch rounded-4"
-            style="width: 300px; height: 470px;"
-            [ngStyle]="{'background-color': i % 2 === 0 ? '#FFFAE7' : 'white'}"
-        >
-            <div class="card-body p-5">
-                <h2 class="card-title fw-bold truncate-two-lines">{{quiz.title}}</h2>
-                <span class="badge rounded-pill text-bg-light fs-6 border border-secondary">Quiz</span>
-                <div class="d-flex justify-content-center align-items-center my-4">
-                    <img [src]="quiz.image || 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTaKl3SXWtGi6MYxpJElmY8smMg3I0vtZYPVA&s'" width="125" height="125" alt="Module Image">
-                </div>
-                <div class="d-flex align-items-end gap-4">
-                    <div class="truncate-last-line lh-base" style="width: 150px; height: 75px;">
-                        {{quiz.description}}
+
+        <!-- Display 3 QUIZZES Only -->
+        <div *ngFor="let quiz of (quizzes$ | async)?.slice(0,3); let i = index" class="col-md-4">
+            <div class="card quiz-card frosted-glass">
+                <div class="card-body text-center">
+                    <h2 class="card-title fw-bold">{{ quiz.title }}</h2>
+                    <span class="badge rounded-pill quiz-badge">Quiz</span>
+                    <div class="d-flex justify-content-center my-3">
+                        <img [src]="quiz.image || 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTaKl3SXWtGi6MYxpJElmY8smMg3I0vtZYPVA&s'" width="125" height="125" alt="Quiz Image">
                     </div>
-                    <span role="button" routerLink="/quiz/{{quiz.id}}">
+                    <p class="quiz-description">{{ quiz.description }}</p>
+                    <span role="button" class="quiz-button" routerLink="/quiz/{{quiz.id}}">
                         <svg width="16" height="17" viewBox="0 0 16 17" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <path d="M15.6643 9.25038C16.1107 8.83534 16.1107 8.16132 15.6643 7.74628L9.95 2.43378C9.50357 2.01874 8.77857 2.01874 8.33214 2.43378C7.88571 2.84882 7.88571 3.52284 8.33214 3.93788L12.1 7.43749H1.14286C0.510714 7.43749 0 7.91229 0 8.49999C0 9.08768 0.510714 9.56249 1.14286 9.56249H12.0964L8.33571 13.0621C7.88929 13.4771 7.88929 14.1512 8.33571 14.5662C8.78214 14.9812 9.50714 14.9812 9.95357 14.5662L15.6679 9.2537L15.6643 9.25038Z" fill="#40403F"/>
                         </svg>
@@ -51,5 +40,6 @@
                 </div>
             </div>
         </div>
+
     </div>
 </div>

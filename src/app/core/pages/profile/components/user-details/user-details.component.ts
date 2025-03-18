@@ -13,6 +13,8 @@ import { ProfileService } from '../../../../services/profile.service';
 })
 export class UserDetailsComponent implements OnInit {
   user$!: Observable<User | null>;
+  badges$!: Observable<Badge[]>;
+  selectedBadge: Badge | null = null; // Store the clicked badge for modal view
 
   userForm: FormGroup = new FormGroup({
     username: new FormControl(null, Validators.required),
@@ -23,8 +25,6 @@ export class UserDetailsComponent implements OnInit {
     profile_picture: new FormControl(null, Validators.min(6)),
     address: new FormControl(null),
   });
-
-  badges$!: Observable<Badge[]>;
 
   constructor(
     private authService: AuthService,
@@ -61,11 +61,9 @@ export class UserDetailsComponent implements OnInit {
   view(template: TemplateRef<any>, size: string = 'xl') {
     const modal = this.modalService.open(template, { size: size, backdrop: 'static' });
     modal.result.then(
-      (result) => {
-      
-      },
+      (result) => {},
       () => {}
-    )
+    );
   }
 
   update() {
@@ -92,4 +90,11 @@ export class UserDetailsComponent implements OnInit {
     });
   }
 
+  /**
+   * Opens the modal to display the clicked badge in a larger view
+   */
+  openBadgeModal(badge: Badge, modal: TemplateRef<any>) {
+    this.selectedBadge = badge;
+    this.modalService.open(modal, { size: 'md', centered: true });
+  }
 }

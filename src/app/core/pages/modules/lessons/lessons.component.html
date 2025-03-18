@@ -1,67 +1,131 @@
-
 <ng-container *ngIf="module$ | async as module">
-    <h1 class="fw-bold font-monospace px-5">{{ module.title }}</h1>
-    <div class="d-flex flex-row justify-content-around my-2 gap-4 flex-wrap">
+  <h1 class="fw-bold font-monospace px-5 text-white">{{ module.title }}</h1>
+
+  <div class="mb-3">
+    <select class="form-select" #categorySelect (change)="selectedCategory = categorySelect.value">
+      <option value="">All Categories</option>
+      <option *ngFor="let category of getCategories(module.lessons)" [value]="category">
+        {{ category | uppercase }}
+      </option>
+    </select>
+  </div>
+
+  <!-- Custom Flexbox Container -->
+  <div class="lesson-container">
+    <ng-container *ngFor="let lesson of module.lessons; let i = index">
+      <div *ngIf="selectedCategory === '' || lesson.category === selectedCategory" class="lesson-card">
         <div
-            *ngFor="let lesson of module.lessons; let i = index" 
-            class="col-4 card card-xxl-stretch rounded-4"
-            style="width: 300px; height: 470px;"
-            [ngStyle]="{'background-color': i % 2 === 0 ? '#FFFAE7' : 'white'}"
-            role="button"
-            (click)="view(lesson, content, i, module.lessons);"
+          class="card p-3 d-flex flex-column justify-content-between"
+          role="button"
+          (click)="view(lesson, content, i, module.lessons);"
+          style="cursor: pointer; min-height: 470px;"
         >
-            <div class="card-body p-5">
-                <h2 class="card-title fw-bold truncate-two-lines">{{lesson.title}}</h2>
-                <!-- <span class="badge rounded-pill text-bg-light fs-6 border border-secondary">Module</span> -->
-                <div class="d-flex justify-content-center align-items-center my-4">
-                    <img [src]="lesson.image ?? 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTaKl3SXWtGi6MYxpJElmY8smMg3I0vtZYPVA&s'" width="125" height="125" alt="Module Image">
-                </div>
-                <div class="d-flex align-items-end gap-4">
-                    <div class="truncate-last-line lh-base" style="width: 150px; height: 75px;">
-                        {{lesson.description}}
-                    </div>
-                    <span role="button">
-                        <svg width="16" height="17" viewBox="0 0 16 17" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M15.6643 9.25038C16.1107 8.83534 16.1107 8.16132 15.6643 7.74628L9.95 2.43378C9.50357 2.01874 8.77857 2.01874 8.33214 2.43378C7.88571 2.84882 7.88571 3.52284 8.33214 3.93788L12.1 7.43749H1.14286C0.510714 7.43749 0 7.91229 0 8.49999C0 9.08768 0.510714 9.56249 1.14286 9.56249H12.0964L8.33571 13.0621C7.88929 13.4771 7.88929 14.1512 8.33571 14.5662C8.78214 14.9812 9.50714 14.9812 9.95357 14.5662L15.6679 9.2537L15.6643 9.25038Z" fill="#40403F"/>
-                        </svg>
-                    </span>
-                </div>
-            </div>
+        <div class="text-center">
+          <img
+            [src]="lesson.image ? lesson.image : 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTaKl3SXWtGi6MYxpJElmY8smMg3I0vtZYPVA&s'"
+            class="img-fluid rounded-3"
+            alt="Module Image"
+          />
         </div>
-    </div>
+        
+          <h5 class="card-title fw-bold truncate-two-lines text-center">{{ lesson.title }}</h5>
+          <p class="card-text truncate-last-line">{{ lesson.description }}</p>
+          <div class="d-flex justify-content-end mt-3">
+            <svg width="16" height="17" viewBox="0 0 16 17" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path
+                d="M15.6643 9.25038C16.1107 8.83534 16.1107 8.16132 15.6643 7.74628L9.95 2.43378C9.50357 2.01874 8.77857 2.01874 8.33214 2.43378C7.88571 2.84882 7.88571 3.52284 8.33214 3.93788L12.1 7.43749H1.14286C0.510714 7.43749 0 7.91229 0 8.49999C0 9.08768 0.510714 9.56249 1.14286 9.56249H12.0964L8.33571 13.0621C7.88929 13.4771 7.88929 14.1512 8.33571 14.5662C8.78214 14.9812 9.50714 14.9812 9.95357 14.5662L15.6679 9.2537L15.6643 9.25038Z"
+                fill="#40403F"
+              />
+            </svg>
+          </div>
+        </div>
+      </div>
+    </ng-container>
+  </div>
 </ng-container>
 
-
 <ng-template #content let-offcanvas>
-    <ng-container *ngIf="lesson$ | async as lesson">
-        <div class="offcanvas-header align-items-start">
-            <div class="d-flex flex-row justify-content-between align-items-center gap-2 w-100">
-                <span role="button" (click)="previous()">
-                    <svg width="11" height="16" viewBox="0 0 11 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M10.75 15.75L0.484375 9.375V7.125L10.75 0.75V3.75L2.17188 8.25L10.75 12.75V15.75Z" fill="black"/>
-                    </svg>
-                </span>
-                <div class="card rounded-4" style="width: 250px; height: 250px; background-color: #FFFAE7;">
-                    <div class="d-flex justify-content-center align-items-center h-100">
-                        <img [src]="lesson.image ?? 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTaKl3SXWtGi6MYxpJElmY8smMg3I0vtZYPVA&s'" width="215" height="215" alt="Module Image">
-                    </div>
-                </div>
-                <span role="button" (click)="next()">
-                    <svg width="11" height="16" viewBox="0 0 11 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M0.25 15.75V12.75L8.82812 8.25L0.25 3.75V0.75L10.75 7.125V9.375L0.25 15.75Z" fill="black"/>
-                    </svg>
-                </span>
-            </div>
-            <button type="button" class="btn-close" aria-label="Close" (click)="offcanvas.dismiss('Cross click')"></button>
-        </div>
-        <div class="offcanvas-body">
-            <h4 class="fw-bold font-monospace">{{lesson.title}}</h4>
-            <p class="my-2 fw-normal">
-                {{lesson.description}}
-            </p>
-            <p class="fw-normal my-3">
-                {{ lesson.content }}
-            </p>
-        </div>
-    </ng-container>
+  <ng-container *ngIf="lesson$ | async as lesson">
+    <div class="offcanvas-header">
+      <div class="d-flex justify-content-between align-items-center w-100">
+        <button class="btn btn-sm" (click)="previous()">
+          <svg width="11" height="16" viewBox="0 0 11 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M10.75 15.75L0.484375 9.375V7.125L10.75 0.75V3.75L2.17188 8.25L10.75 12.75V15.75Z" fill="black" />
+          </svg>
+        </button>
+        <img
+          [src]="lesson.image ? lesson.image : 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTaKl3SXWtGi6MYxpJElmY8smMg3I0vtZYPVA&s'"
+          class="img-fluid rounded-3"
+          style="max-height: 200px; object-fit: cover;"
+          alt="Module Image"
+        />
+        <button class="btn btn-sm" (click)="next()">
+          <svg width="11" height="16" viewBox="0 0 11 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M0.25 15.75V12.75L8.82812 8.25L0.25 3.75V0.75L10.75 7.125V9.375L0.25 15.75Z" fill="black" />
+          </svg>
+        </button>
+      </div>
+      <button type="button" class="btn-close" aria-label="Close" (click)="offcanvas.dismiss('Cross click')"></button>
+    </div>
+    <div class="offcanvas-body">
+      <h4 class="fw-bold font-monospace">{{ lesson.title }}</h4>
+      <p class="my-2">{{ lesson.description }}</p>
+      <p>{{ lesson.content }}</p>
+    </div>
+  </ng-container>
 </ng-template>
+
+<style>
+  /* Flexbox Grid Layout */
+  .lesson-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center; /* Ensures even spacing */
+    gap: 20px; /* Space between cards */
+  }
+
+  /* Each Lesson Card */
+  .lesson-card {
+    flex: 1 1 calc(25% - 20px); /* Dynamically adjusts width */
+    max-width: 300px;
+    min-width: 250px; /* Prevents overly small cards */
+  }
+
+  /* Ensure Cards are Consistent */
+  .card {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    min-height: 470px;
+  }
+
+  .card img {
+  width: 100%; 
+  height: auto; /* Maintains aspect ratio */
+  max-height: 150px; /* Ensures images stay within a reasonable height */
+  object-fit: contain; /* Prevents cropping */
+}
+
+  .card:hover {
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+
+  /* Responsive Adjustments */
+  @media (max-width: 992px) {
+    .lesson-card {
+      flex: 1 1 calc(33.333% - 20px);
+    }
+  }
+
+  @media (max-width: 768px) {
+    .lesson-card {
+      flex: 1 1 calc(50% - 20px);
+    }
+  }
+
+  @media (max-width: 576px) {
+    .lesson-card {
+      flex: 1 1 100%;
+    }
+  }
+</style>

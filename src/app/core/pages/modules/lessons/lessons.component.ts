@@ -1,4 +1,4 @@
-import { Component, OnInit, TemplateRef, ViewEncapsulation } from '@angular/core';
+import { Component, OnInit, TemplateRef, ViewEncapsulation, OnDestroy } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Observable, Subscription } from 'rxjs';
 import { Mdule } from '../../../interfaces/module';
@@ -14,13 +14,15 @@ import { TimeServiceService } from '../../../services/time.service';
   styleUrl: './lessons.component.scss',
   encapsulation: ViewEncapsulation.None,
 })
-export class LessonsComponent implements OnInit {
+export class LessonsComponent implements OnInit, OnDestroy {
   private timerSubscription!: Subscription;
-  module$!: Observable<Mdule | null>;
-  lesson$!: Observable<Lesson| null>;
+  module$: Observable<any>;
+  lesson$!: Observable<Lesson | null>;
   lessons: Lesson[] = [];
   index!: number;
   seconds: number = 0;
+  selectedCategory: string = ''; // To store the selected category
+
 
   constructor(
     private moduleService: ModuleService,
@@ -28,12 +30,12 @@ export class LessonsComponent implements OnInit {
     private canvas: NgbOffcanvas,
     private lessonService: LessonService,
     private timeService: TimeServiceService
-  ) { 
+  ) {
     this.module$ = this.moduleService.module$;
     this.lesson$ = this.lessonService.lesson$;
     this.timeService.getElapsedTimeInSeconds().subscribe(
       seconds => this.seconds = seconds
-    )
+    );
   }
 
   ngOnInit(): void {
@@ -41,44 +43,73 @@ export class LessonsComponent implements OnInit {
     this.moduleService.show(+id!).subscribe();
   }
 
+  ngOnDestroy(): void {
+    if (this.timerSubscription) {
+      this.timerSubscription.unsubscribe();
+    }
+  }
+
   view(lesson: Lesson, template: TemplateRef<any>, index: number, lessons: Lesson[]) {
     this.lessons = lessons;
     this.index = index;
     this.lessonService.lesson = lesson;
     this.canvas.open(template, { position: 'end' });
-    this.timerSubscription = this.timeService.startTimer().subscribe();
+    this.startTimer();
   }
 
   next() {
-    console.log(this.index);
     this.track();
-    this.timerSubscription = this.timeService.startTimer().subscribe();
-
     this.index++;
     this.lessonService.lesson = this.lessons[this.index];
     this.checker();
+    this.startTimer();
   }
 
   previous() {
     this.track();
-    this.timerSubscription = this.timeService.startTimer().subscribe();
-
     this.index--;
     this.lessonService.lesson = this.lessons[this.index];
     this.checker();
+    this.startTimer();
   }
 
   checker() {
     if (!this.lessons[this.index]) {
       this.canvas.dismiss();
-      this.timerSubscription.unsubscribe();
+      this.stopTimer();
     }
   }
 
   track() {
-    this.timerSubscription.unsubscribe();
+    this.stopTimer();
     const lesson = this.lessons[this.index];
     this.moduleService.track(lesson.id, this.seconds).subscribe(res => this.moduleService.index().subscribe());
   }
 
+  private startTimer() {
+    if (this.timerSubscription) {
+      this.stopTimer();
+    }
+    this.timerSubscription = this.timeService.startTimer().subscribe();
+  }
+
+  private stopTimer() {
+    if (this.timerSubscription) {
+      this.timerSubscription.unsubscribe();
+    }
+  }
+
+  getCategories(lessons: Lesson[]): string[] {
+    const categories = new Set<string>();
+    if (lessons) { // Check if lessons is not null
+      lessons.forEach(lesson => {
+          if (lesson.category) {
+              categories.add(lesson.category);
+          }
+      });
+    return Array.from(categories);
+  }
+  return []; // Return an empty array if lessons is null or undefined
 }
+}
+

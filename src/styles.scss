@@ -1,21 +1,163 @@
-/* You can add global styles to this file, and also import other style files */
-
-/* Importing Bootstrap SCSS file. */
+/* Importing Bootstrap and Google Fonts */
 @import 'bootstrap/scss/bootstrap';
-@import url('https://fonts.googleapis.com/css2?family=Asap+Condensed:ital,wght@0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Asap+Condensed:wght@200;300;400;500;600;700;800;900&display=swap');
 
 * {
     font-family: 'Asap Condensed', sans-serif;
     padding: 0;
     margin: 0;
-    box-sizing: 0;
+    box-sizing: border-box;
+    transition: all 0.3s ease-in-out;
+}
+
+
+
+/* Smooth Scrolling */
+html {
+    scroll-behavior: smooth;
+}
+
+/* ✨ Dynamic Background Animation */
+@keyframes moveBackground {
+    0% { background-position: 0% 50%; }
+    100% { background-position: -2000px 50%; }
 }
 
 body {
     background-image: url('./assets/road.png');
     background-repeat: repeat-x;
-    background-size: auto 1500px;
-    background-position: 0% 25%;
+    background-size: auto 100%;
+    background-position: 0% 50%;
     background-attachment: fixed;
     height: 100vh;
+    animation: moveBackground 15s linear infinite;
+    overflow-x: hidden;
+    
 }
+/* ✨ Card Container */
+.auth-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Ensures center alignment */
+}
+
+.logo-container {
+    display: flex;
+    justify-content: center;
+    margin-bottom: -30px; /* Adjust spacing */
+}
+
+.logo {
+    display: block;
+    margin: 0 auto;
+}
+
+
+@keyframes floatEffect {
+    0%, 100% { transform: translateX(0) rotate(0deg); }
+    50% { transform: translateX(10px) rotate(10deg); }
+}
+
+
+/* ✨ Smooth Fade-in Content */
+.container {
+    animation: fadeIn 1.5s ease-in-out;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(-20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* ✨ Modern Interactive Buttons */
+.animated-button {
+    position: relative;
+    display: inline-block;
+    padding: 12px 24px;
+    font-size: 16px;
+    font-weight: 600;
+    border: none;
+    cursor: pointer;
+    overflow: hidden;
+    background: linear-gradient(135deg, #ff8769, #ffdc14);
+    color: #fff;
+    border-radius: 50px;
+    transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+}
+
+.animated-button:hover {
+    transform: translateY(-3px);
+    box-shadow: 0px 5px 20px rgba(116, 82, 240, 0.5);
+}
+
+.animated-button:active {
+    transform: translateY(2px);
+    box-shadow: 0px 2px 10px rgba(255, 20, 147, 0.3);
+}
+
+/* ✨ Ripple Effect */
+.animated-button .ripple {
+    position: absolute;
+    width: 100px;
+    height: 100px;
+    background: rgba(255, 255, 255, 0.5);
+    border-radius: 50%;
+    transform: scale(0);
+    opacity: 0;
+    pointer-events: none;
+    transition: transform 0.6s ease-out, opacity 0.6s ease-out;
+}
+
+.animated-button:active .ripple {
+    transform: scale(4);
+    opacity: 0;
+}
+
+/* ✨ 3D Hover Cards */
+.card {
+    border-radius: 15px;
+    overflow: hidden;
+    box-shadow: 0px 10px 30px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease-in-out;
+}
+
+.card:hover {
+    transform: translateY(-10px) scale(1.05);
+    box-shadow: 0px 15px 40px rgba(0, 0, 0, 0.15);
+}
+
+/* ✨ Smooth Hover Effects */
+.nav-link {
+    position: relative;
+    text-decoration: none;
+    transition: color 0.3s ease-in-out;
+}
+
+.nav-link::after {
+    content: '';
+    position: absolute;
+    left: 50%;
+    bottom: -3px;
+    width: 0;
+    height: 2px;
+    background: #ff1493;
+    transition: width 0.3s ease-in-out, left 0.3s ease-in-out;
+}
+
+.nav-link:hover::after {
+    width: 100%;
+    left: 0;
+}
+
+/* ✨ Bouncy Heading Effect */
+.bouncy-text {
+    display: inline-block;
+    animation: bounce 2s infinite alternate;
+}
+
+@keyframes bounce {
+    from { transform: translateY(0); }
+    to { transform: translateY(-8px); }
+}
+
+

@@ -1,13 +1,12 @@
-<h1 class="fw-bold font-monospace px-5">Modules</h1>
 <div class="d-flex flex-column justify-content-around gap-5 mx-5">
-    <div
-        *ngFor="let module of modules$ | async; let i = index" 
-        class="card card-xxl-stretch rounded-4 user-select-none"
+    <div 
+        *ngFor="let module of (modules$ | async)?.slice(0, 3); let i = index" 
+        class="card card-xxl-stretch rounded-4 user-select-none frosted-glass"  
         role="button"
         (click)="show(module.id, $event)"
     >
         <div class="card-body p-3">
-            <div class="d-flex flex-row justify-content-center align-items-center h-100 gap-3">
+            <div class="d-flex flex-row justify-content-center align-items-center h-50 gap-3">
                 <div class="col-4 d-flex justify-content-center align-items-center mx-4">
                     <img [src]="module.image || 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTaKl3SXWtGi6MYxpJElmY8smMg3I0vtZYPVA&s'" height="175" width="175" alt="Module Image">
                 </div>
@@ -17,7 +16,7 @@
                         {{module.description}}
                     </div>
                 </div>
-                <div class="col-4 d-flex flex-row gap-2">
+                <div class="col-4 d-flex flex-column align-items-center justify-content-center gap-2">
                     <apx-chart
                         [series]="chartOptions[i].series"
                         [colors]="chartOptions[i].colors"
@@ -27,11 +26,10 @@
                         [dataLabels]="chartOptions[i].dataLabels"
                         [legend]="chartOptions[i].legend"
                     ></apx-chart>
-                    <span role="button" (click)="bookmark(module.id, $event )">
-                        <svg width="25" height="25" viewBox="0 0 25 25" fill="none" xmlns="http://www.w3.org/2000/svg"
-                        >
+                    <span role="button" (click)="bookmark(module.id, $event)">
+                        <svg width="25" height="25" viewBox="0 0 25 25" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <path d="M4.62305 22.3809C4.96289 22.5332 5.32031 22.6094 5.67188 22.6094C6.27734 22.6094 6.87109 22.3887 7.34961 21.9629L11.5898 18.1934C12.1074 17.7324 12.8887 17.7324 13.4062 18.1934L17.6465 21.9629C18.4043 22.6367 19.4492 22.7969 20.373 22.3809C21.2969 21.9648 21.8711 21.0781 21.8711 20.0645V4.6875C21.8711 3.28711 20.7324 2.14844 19.332 2.14844H5.66406C4.26367 2.14844 3.125 3.28711 3.125 4.6875V20.0645C3.125 21.0781 3.69922 21.9668 4.62305 22.3809ZM4.29688 4.6875C4.29688 3.93359 4.91016 3.32031 5.66406 3.32031H19.3359C20.0898 3.32031 20.7031 3.93359 20.7031 4.6875V20.0645C20.7031 20.6191 20.4023 21.084 19.8965 21.3125C19.3906 21.5391 18.8418 21.4551 18.4277 21.0879L14.1875 17.3184C13.707 16.8906 13.1035 16.6777 12.5 16.6777C11.8965 16.6777 11.2949 16.8906 10.8125 17.3184L6.57227 21.0879C6.1582 21.4551 5.60937 21.541 5.10352 21.3125C4.59766 21.0859 4.29688 20.6191 4.29688 20.0645V4.6875Z" 
-                                [attr.fill]="module.is_bookmarked ? '#28a745' : 'black'"/>
+                                [attr.fill]="module.is_bookmarked? '#28a745': 'black'"/>
                         </svg>
                     </span>
                 </div>

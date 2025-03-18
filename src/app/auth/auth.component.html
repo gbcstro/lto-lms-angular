@@ -1,8 +1,158 @@
-<div class="d-flex align-items-center justify-content-center user-select-none vh-100">
-    <div class="card rounded-4 position-relative">
-        <img class="position-absolute top-0 start-50 translate-middle" src="./assets/logo.png" width="150" height="150" alt="">
-        <div class="card-body p-5" style="width: 500px;">
-            <router-outlet></router-outlet>
+
+<div class="container">
+    <!-- Left Side: Description -->
+    <div class="content-container">
+        <div class="logo-container">
+            <img src="./assets/Icons.gif" alt="Logo Placeholder">
+        </div>
+        <h1 class="main-title">Sign Seeker: Your Ultimate Road Sign Learning Adventure!</h1>
+        <p class="main-subtitle">Master Philippine Road Signs with Fun & Interactive Learning!</p>
+        <p class="main-text">
+            Get ready to turn road safety education into an exciting experience! Sign Seeker is an interactive learning platform designed to make mastering Philippine road signs easy, engaging, and fun.
+        </p>
+        <p class="main-text">
+            With gamified quizzes, real-life driving scenarios, and instant feedback, you’ll gain the knowledge you need to navigate the roads with confidence. Whether you're a new driver, a student, or simply want to improve your road safety awareness, Sign Seeker is here to guide you—one sign at a time!
+        </p>
+    </div>
+
+    <!-- Right Side: Frosted Glass Login/Auth Box -->
+    <div class="auth-container">
+        <div class="card frosted-glass">
+            <div class="card-body">
+                <router-outlet></router-outlet>
+            </div>
         </div>
     </div>
 </div>
+
+<style>
+    /* Layout */
+    .container {
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        padding: 0 5%;
+        gap: 40px;
+    }
+
+    /* Left Side: Description */
+    .content-container {
+        max-width: 600px;
+        flex: 1;
+        text-align: left;
+    }
+
+    .logo-container img {
+        width: 200px;
+        height: auto;
+    }
+
+    .main-title {
+        font-size: 42px;
+        font-weight: bold;
+        color: #440a0a;
+    }
+
+    .main-subtitle {
+        font-size: 20px;
+        font-weight: bold;
+        color: #440a0a;
+        margin-bottom: 20px;
+    }
+
+    .main-text {
+        font-size: 16px;
+        line-height: 1.5;
+        color: #1a1a1a;
+        margin-bottom: 15px;
+    }
+
+    /* Right Side: Login Box */
+    .auth-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 400px;
+        max-width: 90%;
+    }
+
+    .frosted-glass {
+        background: rgba(255, 255, 255, 0.2);
+        backdrop-filter: blur(10px);
+        box-shadow: 0px 8px 32px rgba(0, 0, 0, 0.2);
+        border: 1px solid rgba(255, 255, 255, 0.3);
+        padding: 20px;
+        width: 100%;
+        text-align: center;
+        border-radius: 15px;
+    }
+
+    /* ✅ FULL RESPONSIVENESS FIXED ✅ */
+    @media (max-width: 1024px) {
+        .container {
+            flex-direction: column;
+            text-align: center;
+            gap: 20px;
+        }
+
+        .content-container {
+            max-width: 100%;
+        }
+
+        .auth-container {
+            width: 100%;
+        }
+    }
+
+    @media (max-width: 768px) {
+        .main-title {
+            font-size: 32px;
+        }
+
+        .main-subtitle {
+            font-size: 18px;
+        }
+
+        .main-text {
+            font-size: 14px;
+        }
+
+        .logo-container img {
+            width: 150px;
+        }
+
+        .falling-image {
+            width: 8vw;
+        }
+    }
+
+    @media (max-width: 480px) {
+        .container {
+            padding: 20px;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .main-title {
+            font-size: 28px;
+        }
+
+        .main-subtitle {
+            font-size: 16px;
+        }
+
+        .main-text {
+            font-size: 12px;
+        }
+
+        .frosted-glass {
+            padding: 15px;
+        }
+
+        .falling-image {
+            width: 10vw;
+        }
+    }
+</style>
